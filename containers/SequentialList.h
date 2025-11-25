@@ -84,6 +84,136 @@ public:
      *   nums.forEach([](int x) { std::cout << x << std::endl; });
      */
     void forEach(std::function<void(T)> action);
+
+    // ========================================================================
+    // ADVANCED AGGREGATION OPERATIONS
+    // ========================================================================
+
+    /**
+     * Min - Find the minimum element.
+     * 
+     * WHAT: Return the smallest element in the list
+     * 
+     * @return Minimum element
+     * @throws list_err if list is empty
+     * 
+     * Example:
+     *   VectorList<int> nums = {5, 2, 8, 1, 9};
+     *   int min = nums.min();  // Returns 1
+     */
+    T min();
+
+    /**
+     * Max - Find the maximum element.
+     * 
+     * WHAT: Return the largest element in the list
+     * 
+     * @return Maximum element
+     * @throws list_err if list is empty
+     */
+    T max();
+
+    /**
+     * Sum - Calculate sum of all elements.
+     * 
+     * WHAT: Add all elements together
+     * 
+     * @return Sum of all elements
+     * 
+     * Note: Requires T to support operator+
+     */
+    T sum();
+
+    /**
+     * Average - Calculate arithmetic mean.
+     * 
+     * WHAT: Compute average value of all elements
+     * 
+     * @return Average as double
+     * @throws list_err if list is empty
+     * 
+     * Example:
+     *   VectorList<int> nums = {1, 2, 3, 4, 5};
+     *   double avg = nums.average();  // Returns 3.0
+     */
+    double average();
+
+    /**
+     * Median - Find the middle value.
+     * 
+     * WHAT: Return the median (middle value when sorted)
+     * 
+     * @return Median value
+     * @throws list_err if list is empty
+     * 
+     * Note: Creates a sorted copy, does not modify original
+     */
+    double median();
+
+    /**
+     * Count inversions - Count pairs (i,j) where i < j but list[i] > list[j].
+     * 
+     * WHAT: Measure how far the list is from being sorted
+     * 
+     * @return Number of inversions
+     * 
+     * Example:
+     *   VectorList<int> nums = {3, 1, 2};
+     *   int inv = nums.countInversions();  // Returns 2
+     *   // Inversions: (3,1) and (3,2)
+     */
+    int countInversions();
+
+    /**
+     * Any - Check if any element satisfies predicate.
+     * 
+     * WHAT: Return true if at least one element matches
+     * 
+     * @param predicate Function to test elements
+     * @return true if any element matches
+     */
+    bool any(std::function<bool(T)> predicate);
+
+    /**
+     * All - Check if all elements satisfy predicate.
+     * 
+     * WHAT: Return true if every element matches
+     * 
+     * @param predicate Function to test elements
+     * @return true if all elements match
+     */
+    bool all(std::function<bool(T)> predicate);
+
+    /**
+     * None - Check if no elements satisfy predicate.
+     * 
+     * WHAT: Return true if no elements match
+     * 
+     * @param predicate Function to test elements
+     * @return true if no elements match
+     */
+    bool none(std::function<bool(T)> predicate);
+
+    /**
+     * Find - Get first element matching predicate.
+     * 
+     * WHAT: Return the first element that matches, or throw if none found
+     * 
+     * @param predicate Function to test elements
+     * @return First matching element
+     * @throws list_err if no match found
+     */
+    T find(std::function<bool(T)> predicate);
+
+    /**
+     * Contains - Check if element exists in list.
+     * 
+     * WHAT: Return true if the value is in the list
+     * 
+     * @param value Value to search for
+     * @return true if value is found
+     */
+    bool contains(T value);
 };
 
 // Include the template implementation
