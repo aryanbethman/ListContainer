@@ -1,0 +1,4 @@
+Functional programming is a programming paradigm.
+It treats computation as the evaluation of functions.
+Lambda functions are anonymous functions in programming.
+Map, filter, and reduce are common functional operations.

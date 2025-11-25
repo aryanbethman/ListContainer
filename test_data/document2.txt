@@ -1,0 +1,4 @@
+Object oriented programming uses objects and classes.
+Lambda expressions provide a way to write inline functions.
+Functional programming emphasizes immutability.
+The map operation transforms each element in a collection.
