@@ -124,20 +124,160 @@ forEach: std::function<void(T)> action
 
 ---
 
-## Entry 3: [To be filled as development progresses]
+## Entry 3: TDD Implementation of Functional Operations
+**Date:** November 25, 2025, Evening  
+**Duration:** ~2 hours  
+**Activity:** Implementing map, filter, reduce, forEach using Test-Driven Development
+
+### Actions Taken
+1. Created feature branch `feature/functional-operations` for version control
+2. Wrote comprehensive test suite (`test_functional.cpp`) with 37 test cases BEFORE implementation
+3. Implemented functional operations in `SequentialList.h` and `SequentialList.cpp`
+4. Verified all 37 tests pass
+5. Committed and pushed to GitHub
+
+### Design Decisions
+
+#### TDD Approach (Test-Driven Development)
+- **Decision:** Write tests first, then implement to make them pass
+- **Reasoning:** 
+  - Tests serve as specification of desired API
+  - Ensures code meets actual requirements
+  - Catches edge cases early
+  - Documents expected behavior
+- **Alternative:** Implementation-first approach
+- **Why TDD Won:** Assignment emphasizes documentation and process; TDD provides both
+
+#### Return Type: VectorList (Immutable Pattern)
+- **Decision:** Functional operations return NEW `VectorList<T>` or `VectorList<U>`
+- **Reasoning:**
+  - Immutability is core functional programming principle
+  - Original list remains unchanged (no side effects)
+  - Enables safe method chaining
+  - Matches behavior of functional languages (Haskell, Scala)
+- **Tradeoff:** More memory usage, but clearer semantics
+- **Consequence:** Even `LinkedList.map()` returns `VectorList` (documented in tests)
+
+#### Implementation Location
+- **Decision:** Implement in base class `SequentialList<T>`
+- **Reasoning:**
+  - Operations only need `at(int)` and `size()` - already in SequentialList
+  - Automatic inheritance by VectorList, LinkedList, and RestrictedSequentialList
+  - Code reuse (DRY principle)
+- **Note:** Used template implementation file `.cpp` included in `.h` header
+
+### Test Coverage
+Created 9 test suites with 37 total assertions:
+1. **Map (same type)** - Transform int→int (squaring)
+2. **Map (type change)** - Transform int→string  
+3. **Filter** - Even numbers, threshold filtering
+4. **Reduce** - Sum, product, max, conditional counting
+5. **ForEach** - Side effects on external variables
+6. **Method Chaining** - filter→map→reduce composition
+7. **Edge Cases** - Empty lists, single elements, no matches
+8. **LinkedList** - Verify inheritance works
+9. **Real-World** - Student grade processing example
+
+### GenAI Assistance Used
+
+**Tool:** GitHub Copilot  
+**Prompt 1:** "Create TDD test suite for functional operations on C++ list containers"
+
+**Response:**
+- Generated template test file structure with assert functions
+- Suggested using ANSI color codes for output formatting
+- Provided examples of lambda test cases
+
+**What Was Incorporated:**
+✅ Test structure with color-coded pass/fail  
+✅ Comprehensive edge case testing  
+✅ Real-world example pattern  
+
+**Prompt 2:** "Implement map, filter, reduce for C++ template class using std::function"
+
+**Response:**
+- Showed template<typename T> template<typename U> syntax for nested templates
+- Explained forward declaration for VectorList to break circular dependency
+- Suggested including .cpp implementation in header for templates
+
+**What Was Incorporated:**
+✅ Nested template syntax for `map` and `reduce`  
+✅ Forward declaration pattern  
+✅ `.cpp` include strategy  
+
+**What Was NOT Incorporated:**
+❌ Suggested using `auto` return types (C++14) - stayed with explicit types for clarity
+❌ Move semantics optimization - keeping simple for now
+
+**Prompt 3:** "Fix compilation error: no viable conversion from VectorList to LinkedList"
+
+**Response:**
+- Identified that functional ops return VectorList, not original container type
+- Suggested either:
+  1. Change return type to be polymorphic (complex)
+  2. Document that operations always return VectorList (simple)
+- Explained tradeoff between purity and pragmatism
+
+**Decision Made:**
+✅ Document VectorList return type in tests  
+✅ Add comment explaining design choice  
+
+### Success/Failure Assessment
+
+✅ **COMPLETE SUCCESS:**
+- All 37 tests pass on first run after implementation
+- Clean compilation with no warnings
+- Method chaining works perfectly
+- Both VectorList and LinkedList compatible
+
+**Example Output:**
+```
+✓ PASS: Map preserves size
+✓ PASS: Filter: 5 even numbers in 1-10  
+✓ PASS: Chain: filter evens -> square -> sum = 220
+✓ PASS: Real-world: average = 75.4
+```
+
+### Insights Gained
+
+1. **TDD is powerful for API design:**
+   - Writing tests first forced clear thinking about WHAT we want
+   - Caught the VectorList return type issue early
+   - Tests serve as live documentation
+
+2. **Functional-OO synergy:**
+   - OO hierarchy (SequentialList) provides WHAT operations exist
+   - Functional lambdas let users specify WHAT transformation to apply
+   - HOW is completely hidden in base class implementation
+
+3. **Immutability simplifies reasoning:**
+   - `numbers.filter(x > 0).map(x*2)` clearly creates new lists
+   - No concerns about modifying shared state
+   - Easier to test (no setup/teardown needed)
+
+4. **Template metaprogramming challenges:**
+   - Nested templates (`template<T> template<U>`) are tricky
+   - Forward declarations needed to break circular dependencies
+   - Implementation must be in header for template instantiation
+
+### Open Questions RESOLVED
+
+1. ~~Mutable vs Immutable?~~ → **RESOLVED: Immutable (returns new list)**
+2. ~~Method chaining?~~ → **RESOLVED: Works via return values**
+3. ~~Works with LinkedList?~~ → **RESOLVED: Yes, via inheritance**
+
+### Next Steps
+1. ✅ Commit functional operations
+2. ✅ Push to GitHub
+3. ⏭️ Implement file I/O module (Task 3)
+4. ⏭️ Build keyword counter example (Task 4)
+
+---
+
+## Entry 4: [Next development session]
 **Date:** [Timestamp]  
 **Duration:** [Time spent]  
 **Activity:** [What you're working on]
-
-### Template for Future Entries
-- Actions Taken
-- Design Decisions (with reasoning and alternatives)
-- GenAI Assistance Used (prompts, responses, interpretations)
-- What Was Incorporated / Not Incorporated
-- Success/Failure assessment
-- Insights Gained
-- Open Questions
-- Next Steps
 
 ---
 
@@ -148,6 +288,9 @@ forEach: std::function<void(T)> action
 | Nov 25 | GitHub Copilot | Project planning | ✅ Todo list created |
 | Nov 25 | GitHub Copilot | Git cleanup | ✅ Removed ignored files |
 | Nov 25 | GitHub Copilot | Functional interface design | ✅ Design document created |
+| Nov 25 | GitHub Copilot | TDD test suite generation | ✅ 37-test suite created |
+| Nov 25 | GitHub Copilot | Template implementation | ✅ All operations working |
+| Nov 25 | GitHub Copilot | Compilation error resolution | ✅ VectorList return type clarified |
 
 ---
 
