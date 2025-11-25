@@ -6,6 +6,7 @@
 main
 run_tests
 a.out
+test_functional
 
 # Build directories
 obj/
