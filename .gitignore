@@ -8,6 +8,7 @@ run_tests
 a.out
 test_functional
 test_filereader
+keyword_demo
 
 # Build directories
 obj/
