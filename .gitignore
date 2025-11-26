@@ -4,8 +4,13 @@
 
 # Executables
 main
+demo
 run_tests
 a.out
+test_functional
+test_fileio
+test_textanalysis
+test_keyword_simple
 
 # Build directories
 obj/
@@ -23,3 +28,16 @@ build/
 
 # Test outputs
 *.log
+
+# Submission/Archive files
+*.zip
+*.tar.gz
+*.tar
+ListContainer_Submission/
+
+# Temporary files
+*~
+*.tmp
+*.bak
+.*.swp
+

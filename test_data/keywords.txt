@@ -1,0 +1,15 @@
+algorithm
+data
+structure
+search
+sort
+tree
+graph
+hash
+queue
+stack
+heap
+linked
+list
+array
+node

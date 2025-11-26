@@ -17,6 +17,12 @@ public:
     // Constructor
     VectorList();
 
+    // Copy Constructor (Rule of Three)
+    VectorList(const VectorList<T>& other);
+
+    // Assignment Operator (Rule of Three)
+    VectorList<T>& operator=(const VectorList<T>& other);
+
     // Destructor
     ~VectorList();
 

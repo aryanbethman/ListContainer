@@ -1,0 +1,30 @@
+Advanced data structures build upon basic ones to solve complex problems.
+A self-balancing tree, like an AVL tree or Red-Black tree, maintains its structure
+automatically to ensure efficient search, insertion, and deletion operations.
+
+Tries are tree-based data structures particularly useful for storing strings.
+They allow for fast prefix-based search operations, making them ideal for
+autocomplete features and dictionary implementations.
+
+Skip lists provide an alternative to balanced trees. This probabilistic data structure
+allows for fast search while being simpler to implement than balanced trees.
+
+B-trees and B+ trees are specialized tree structures used extensively in databases
+and file systems. These structures are optimized for systems that read and write
+large blocks of data.
+
+Bloom filters are space-efficient probabilistic data structures used to test whether
+an element is a member of a set. While they can produce false positives, they never
+produce false negatives, making them useful for certain applications.
+
+Disjoint-set data structures (also called union-find) are used for keeping track of
+elements partitioned into disjoint sets. They're commonly used in graph algorithms,
+particularly for detecting cycles and finding connected components.
+
+Fenwick trees (Binary Indexed Trees) are data structures that can efficiently update
+elements and calculate prefix sums in a table of numbers. They're more space-efficient
+than segment trees for certain operations.
+
+Understanding these advanced structures expands your algorithmic toolkit and allows
+you to tackle more complex computational problems efficiently. Each structure has its
+specific use cases where it excels compared to simpler alternatives.

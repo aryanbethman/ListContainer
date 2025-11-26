@@ -8,6 +8,42 @@ VectorList<T>::VectorList() {
     _data = new T[_capacity];
 }
 
+// --- Copy Constructor (Deep Copy) ---
+template <typename T>
+VectorList<T>::VectorList(const VectorList<T>& other) {
+    _capacity = other._capacity;
+    _size = other._size;
+    _data = new T[_capacity];
+    
+    // Deep copy all elements
+    for (int i = 0; i < _size; ++i) {
+        _data[i] = other._data[i];
+    }
+}
+
+// --- Assignment Operator (Deep Copy) ---
+template <typename T>
+VectorList<T>& VectorList<T>::operator=(const VectorList<T>& other) {
+    // Check for self-assignment
+    if (this == &other) {
+        return *this;
+    }
+    
+    // Delete old data
+    delete[] _data;
+    
+    // Copy from other
+    _capacity = other._capacity;
+    _size = other._size;
+    _data = new T[_capacity];
+    
+    for (int i = 0; i < _size; ++i) {
+        _data[i] = other._data[i];
+    }
+    
+    return *this;
+}
+
 // --- Destructor ---
 template <typename T>
 VectorList<T>::~VectorList() {
