@@ -91,7 +91,7 @@ quicktest: test_functional
 bundle: clean all tests
 	@echo "Creating submission bundle..."
 	@zip -r ListContainer_Submission.zip \
-		*.cpp *.h *.md Makefile \
+		*.cpp *.h *.md *.mp4 *.pdf Makefile \
 		containers/ functional/ io/ analysis/ algorithms/ interface/ \
 		test_data/ tests/ docs/ \
 		-x "*.o" "*/.DS_Store" "*.zip"

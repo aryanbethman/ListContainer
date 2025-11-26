@@ -1,13 +1,13 @@
-# ListContainer — Submission Report
+# Functional-OO Assignment
 **CS F301 POPL Assignment | November 2025**
 
+**By:** Aryan Bethmangalkar (2023A7PS0433G)
 **Team:** Solo  
-**Member:** Aryan Bethmangalkar (2023A7PS0433G)
 
 ---
 
-## Abstract (one paragraph)
-This project extends a from-scratch C++ list container library with a small Functional-OO layer: template functions for functional operations (map, filter, reduce), utility aggregators, file I/O for reading and tokenizing plain text, basic search and sort algorithms, and a keyword-frequency analysis tool which is the primary deliverable for the assignment. The code is modular, tested, and accompanied by an interactive CLI demo and concise documentation.
+## Abstract
+This project extends a from-scratch C++ list container library, made in the first assignment, with a small Functional-OO layer: template functions for functional operations (map, filter, reduce), utility aggregators, file I/O for reading and tokenizing plain text, basic search and sort algorithms, and a keyword-frequency analysis tool which is the primary deliverable for the assignment. The code is modular, tested, and accompanied by an interactive CLI demo and concise documentation.
 
 ---
 
@@ -16,12 +16,12 @@ This project extends a from-scratch C++ list container library with a small Func
 2. Detailed project structure
 3. Design philosophy and key decisions
 4. Module-by-module descriptions and API summary
-5. How the primary feature (keyword frequency) works
+5. Keyword frequency works
 6. Tests and verification
 7. Implementation notes and notable code excerpts
-8. GenAI usage log (refer to genai_usage.md)
-9. Known limitations and future work
-10. Submission checklist and how to reproduce
+8. Known limitations and future work
+9. Design Log
+10. GenAI Usage Log
 
 ---
 
@@ -173,7 +173,7 @@ analysis/
 
 ---
 
-## 5. How the primary feature works (keyword frequency analysis)
+## 5. Keyword frequency analysis
 Algorithm (high-level)
 1. Load keywords from `keywords.txt` into a `VectorList<string>`.
 2. Initialize a `VectorList<KeywordFrequency>` with each keyword and count=0.
@@ -242,17 +242,10 @@ File I/O and tokenization
 Sorting and presentation
 - `KeywordFrequency` is a small struct (`string keyword; int count;`) with comparison operators defined to allow sorting by count descending.
 
----
-
-## 8. GenAI usage log (summarized)
-We documented the GenAI interactions in `genai_usage.md`. Summary:
-- Six major Copilot-assisted interactions: architecture, handling non-sequential containers, file I/O, sorting strategy, keyword counting algorithm, and the memory bug fix.
-- Most impactful guidance: prefer template functions for functional semantics and provide a fallback path for non-sequential containers.
-- Helped in creation of sample data for tests, logs and finishing touches on the report.
 
 ---
 
-## 9. Known limitations and suggested future work
+## 8. Known limitations and suggested future work
 Limitations
 - Keyword counting uses O(n*m) scanning; not suitable for very large corpora.
 - File I/O relies on POSIX `dirent.h` (not natively portable to Windows without compatibility layers).
@@ -262,33 +255,223 @@ Suggested improvements
 - Add a `HashMap`-based `KeywordCounter` for large-scale performance.
 - Replace POSIX APIs with C++17 `std::filesystem` for cross-platform portability.
 - Add more unit tests and fuzz tests for tokenization edge cases.
+ 
 
 ---
 
-## 10. Submission checklist & reproducibility
-Files to include in submission (zip)
-- Source code (all folders listed above)
-- `Makefile`
-- `README.md`, `SUBMISSION_REPORT.md`, `design_log.md`, `genai_usage.md`
-- `test_data/` sample input files
-- `tests/` test sources and the resulting test binaries (optional but helpful)
+## 9. Design Log
 
-Commands to create submission zip (example)
+The complete design and development log is presented here for evaluators who prefer a single-file report. (Timestamps are local to the development environment.)
 
-```bash
-make bundle   # if Makefile target exists and creates ListContainer_Submission.zip
-# or manual
-zip -r ListContainer_Submission.zip . -x '*.git*' '*/obj/*' '*/build/*' '*.DS_Store'
+### Entry 1: Assignment Analysis (23/11/2025 14:30)
+
+Requirements Identified:
+- Extend list containers with functional programming (map, filter, reduce)
+- File I/O for reading and tokenizing text files
+- Keyword frequency analysis from multiple files
+- Menu-driven interface for demonstration
+
+Design Philosophy:
+- Focus on WHAT (specification) before HOW (implementation)
+- Free template functions for functional operations (not modifying base classes)
+- Composition for I/O modules (FileReader, TextTokenizer)
+
+---
+
+### Entry 2: Key Design Decisions (23/11/2025 14:45)
+
+1. Functional Operations as Free Functions
+- Why: Maintains Open-Closed Principle, works with any AbstractList<T>
+- Implementation: Template functions using std::function for lambda support
+
+2. Interactive Menu-Driven CLI
+- Why: Easy to demonstrate and test, clear for evaluators
+- Alternative considered: Command-line args (less interactive)
+
+3. Keyword Counting with VectorList<KeywordFrequency>
+- Why: Maintains from-scratch requirement, simple and testable
+
+4. OO in Implementation, Functional at Top Level
+- How (implementation): Classes with encapsulation (FileReader, TextTokenizer, KeywordCounter)
+- What (top level): Functional composition of operations (map → filter → reduce)
+- Pattern: Adapter pattern for containers, Composition pattern for I/O modules
+
+---
+
+### Entry 3: Module Architecture (23/11/2026 15:30)
+
+Directory Structure:
+```
+functional/  - map, filter, reduce, aggregators
+io/          - FileReader, TextTokenizer  
+analysis/    - KeywordCounter (primary feature)
+algorithms/  - Search and sort
+test_data/   - Sample keywords and text files
+tests/       - Comprehensive test suite
 ```
 
-Verification
-- After creating the zip, extract it into a fresh directory and run the quick-start commands above to verify build+demo.
+Dependency Chain: containers → functional → algorithms → io → analysis → demo
 
 ---
 
-## Closing notes
-This project demonstrates a clear separation between high-level functional specifications (map/filter/reduce) and low-level OO implementations (containers, file I/O). The codebase is compact, documented, and easy to evaluate. If you want, I can:
-- produce the zipped submission and confirm its size, or
-- create a short transcript and annotated screenshot set to accompany the demo video.
+### Entry 4: Implementation Phase
 
-**Status:** Expanded consolidated submission report created on 26/11/2025
+Implemented Components (23/11/2025 16:00):
+- Functional operations: map, filter, reduce, forEach, aggregators
+- File I/O: Read files/directories, tokenize with punctuation removal
+
+Implemented Components (25/11/2025 20:00):
+- Keyword analysis: Load keywords, count frequencies, sort descending
+- Search/Sort: Linear, binary search; QuickSort, bubble, insertion sort
+
+Implemented Components (26/11/2025 9:00):
+- Interactive demo with 6 menu sections
+- Test suite: 15 tests covering all modules
+
+Time Spent: ~8 hours total
+
+---
+
+### Entry 5: Critical Bug Fix (26/11/2025 11:30)
+
+Problem: Double free error - `malloc: double free for ptr 0x151810600`
+
+Root Cause: VectorList violated Rule of Three (had destructor, no copy constructor/assignment operator)
+
+Solution: Implemented deep copy semantics:
+- Copy constructor allocates new memory, copies elements
+- Assignment operator with self-assignment check
+
+Result: All 15 tests passing, no memory errors
+
+---
+
+## 10. GenAI Usage Log
+
+Below is the complete GenAI usage log documenting prompts, key suggestions, incorporations and outcomes.
+
+### Interaction 1: Architecture Design
+**Tool:** GitHub Copilot  
+**Date:** 23/11/2025 14:00
+
+**Prompt:** "Analyze PoPL assignment and create implementation plan with directory structure and testing strategy"
+
+**Key Suggestions:**
+- Modular structure: functional/, io/, analysis/, algorithms/
+- Free template functions for functional ops (not methods in container classes)
+- Interactive menu-driven CLI for easy demonstration
+
+**Insight:** Functional programming in C++ works best with free functions using templates and std::function. Keeps functional paradigm separate from OO structure.
+
+**Incorporation:** Adopted modular structure, implemented all functional operations as free template functions.
+
+**Result:** Successful - Clean, maintainable architecture
+
+---
+
+### Interaction 2: Handling Non-Sequential Containers
+**Tool:** GitHub Copilot  
+**Date:** 23/11/2025 14:30
+
+**Prompt:** "How to implement map/filter/reduce for containers without random access like Stack?"
+
+**Suggestion:** Use `dynamic_cast` to check container type, use efficient path for SequentialList (has `at()`), fall back to pop/push for others.
+
+**Insight:** Generic algorithms need multiple implementation paths based on container capabilities.
+
+**Incorporation:** Added runtime type checking in FunctionalOps.h with conditional logic.
+
+**Result:** Works for all container types
+
+---
+
+### Interaction 3: File I/O Implementation
+**Tool:** GitHub Copilot Autocomplete  
+**Date:** 23/11/2025 15:00
+
+**Suggestions:**
+- Use `<fstream>` for file reading
+- Use `<dirent.h>` for directory listing (POSIX)
+- Use `<sys/stat.h>` for file existence checks
+
+**Trade-off:** POSIX APIs work on macOS/Linux but not Windows. Acceptable for this assignment's platform.
+
+**Incorporation:** Implemented FileReader using POSIX APIs with proper error handling.
+
+**Result:** Works perfectly on macOS
+
+---
+
+### Interaction 4: Sorting Algorithm Choice
+**Tool:** GitHub Copilot  
+**Date:** 25/11/2025 19:00
+
+**Prompt:** "Best way to sort VectorList with custom comparator without std::sort?"
+
+**Warning:** Using `erase_at`/`insert_at` in sorting is inefficient (O(n) per operation). Suggested simpler algorithms like insertion sort.
+
+**Insight:** With constrained API, simpler algorithms (insertion sort) are more reliable than complex ones (quicksort).
+
+**Incorporation:** Implemented insertion sort and bubble sort for sorting operations.
+
+**Result:** Works but not optimal - acceptable for assignment scope
+
+---
+
+### Interaction 5: Keyword Frequency Algorithm
+**Tool:** GitHub Copilot  
+**Date:** 25/11/2025 20:30
+
+**Prompt:** "Implement keyword frequency counting without std::map"
+
+**Suggestion:** Use `VectorList<KeywordFrequency>` struct. For each word: search list, increment if found, add if not found, then sort by count.
+
+**Trade-off:** O(n*m*k) complexity vs O(n*m) with hash table. Simple and meets "from-scratch" requirement.
+
+**Incorporation:** Implemented exactly as suggested in KeywordCounter.
+
+**Result:** Works correctly for moderate-sized files
+
+---
+
+### Interaction 6: Memory Management Bug
+**Tool:** GitHub Copilot  
+**Date:** 26/11/2025 11:00
+
+**Prompt:** "Double free error in VectorList - how to implement Rule of Three properly?"
+
+**Suggestions:**
+- Add copy constructor with deep copy (allocate new array, copy elements)
+- Add assignment operator with self-assignment check
+- Both need to prevent shared pointers between objects
+
+**Insight:** C++ Rule of Three - if class manages resources (has destructor), must define copy constructor and assignment operator.
+
+**Incorporation:** Implemented deep copy semantics in VectorList.h/cpp.
+
+**Result:** All tests passing, no memory errors
+
+---
+
+### Summary of GenAI usage
+
+**Total Interactions:** 6 major interactions  
+**Success Rate:** 5 fully successful, 1 partially successful  
+**Most Valuable Insight:** Free template functions for functional programming in C++ maintain separation of concerns and work with any AbstractList<T> type.
+
+**Key Learnings:**
+- Design decisions documented before implementation
+- Simple solutions often better with API constraints  
+- GenAI excellent for architecture guidance, human judgment needed for trade-offs
+- Rule of Three is critical for resource-managing classes
+
+---
+
+## Conclusion
+
+Verification: the project includes an automated test suite (`tests/`) and an interactive `demo` binary; after the Rule‑of‑Three fix to `VectorList` all tests pass on the development machine. To reproduce locally, build and run the demo or tests as shown in the Quick start section. There is also a demo video called `VideoDemo.mp4`.
+
+Where to look next: key files are `functional/FunctionalOps.h` (functional primitives), `containers/VectorList.h` (container implementation and copy semantics), `analysis/KeywordCounter.cpp` (counting and sorting), and `demo.cpp` (interactive demonstration). For quick verification, run the tests and the demo and inspect `test_data/` for sample inputs.
+
+This assignment implements the Functional‑OO extension and the keyword frequency analysis required by the assignment. The implementation preserves the from‑scratch constraint for core containers, provides a small header‑only functional layer (map/filter/reduce), includes file I/O and tokenization utilities, and a tested `KeywordCounter` tool that produces the required ranked keyword output.
+
