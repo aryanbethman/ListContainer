@@ -34,6 +34,11 @@
 **3. Keyword Counting with VectorList<KeywordFrequency>**
 - Why: Maintains from-scratch requirement, simple and testable
 
+**4. OO in Implementation, Functional at Top Level**
+- How (implementation): Classes with encapsulation (FileReader, TextTokenizer, KeywordCounter)
+- What (top level): Functional composition of operations (map → filter → reduce)
+- Pattern: Adapter pattern for containers, Composition pattern for I/O modules
+
 ---
 
 ## Entry 3: Module Architecture (23/11/2026 15:30)
